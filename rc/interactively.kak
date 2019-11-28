@@ -92,3 +92,15 @@ define-command i-quit %{
         yes-or-no 'Discard all changes? ' quit! i-quit-keep
     }
 }
+
+define-command i-kill-keep %{
+    try kill catch %{
+        i-delete-buffer i-kill-keep i-kill nop
+    }
+}
+
+define-command i-kill %{
+    try kill catch %{
+        yes-or-no 'Discard all changes? ' kill! i-kill-keep
+    }
+}
