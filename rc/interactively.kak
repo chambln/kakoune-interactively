@@ -1,4 +1,10 @@
-define-command -params 3..4 yes-or-no %{
+define-command \
+-params 3..4 \
+-docstring "yes-or-no <prompt> <consequent> <alternative> <final>
+
+Evaluate <consequent> if [y]es, <alternative> if [n]o. Finally evaluate
+<final>." \
+yes-or-no %{
     prompt -shell-script-completion 'printf "%s\n" yes no y n' %arg{1} %{
         evaluate-commands %sh{
             case "$kak_text" in
