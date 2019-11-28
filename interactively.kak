@@ -48,30 +48,36 @@ i-write %{
     }
 }
 
-define-command i-delete-buffer %{
-    try delete-buffer catch %{
-        yes-or-no 'Save changes? ' %{
-            i-write delete-buffer nop nop
-        } delete-buffer!
+define-command \
+-params 3 \
+-docstring "i-delete-buffer [<commands1> [<commands2> [<commands3>]]]
+
+Interactively delete the buffer. Evaluate commands1 if successful else
+commands2. Finally evaluate commands3." \
+i-delete-buffer %{
+    try %{
+        delete-buffer
+        evaluate-commands "%arg{1}"
+        evaluate-commands "%arg{3}"
+    } catch %{
+        evaluate-commands %sh{
+            printf '%s\n' "yes-or-no 'Save changes? ' %{
+                               i-write %{
+                                   delete-buffer
+                                   $1
+                               } %{$2} %{$3}
+                           } %{
+                               delete-buffer!
+                               $1
+                               $3
+                           }"
+        }
     }
 }
 
 define-command i-quit-keep %{
     try quit catch %{
-        try %{
-            delete-buffer
-            i-quit-keep
-        } catch %{
-            yes-or-no 'Save changes? ' %{
-                i-write %{
-                    delete-buffer
-                    i-quit-keep
-                } i-quit
-            } %{
-               delete-buffer!
-               i-quit-keep
-            }
-        }
+        i-delete-buffer i-quit-keep i-quit nop
     }
 }
 
