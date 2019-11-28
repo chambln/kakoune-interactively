@@ -106,10 +106,12 @@ define-command i-kill %{
 }
 
 
-define-command -override -params .. i-change-directory %{
+define-command -params .. i-change-directory %{
     prompt -file-completion 'change-directory ' %arg{@} %{
         evaluate-commands %sh{
-            if [ -d "$kak_text" ]; then
+            if [ -z "$kak_text" ]; then
+                printf "change-directory"
+            elif [ -d "$kak_text" ]; then
                 printf "change-directory '%s'" "$kak_text"
             elif [ -e "$kak_text" ]; then
                 printf "change-directory '%s'" "$(dirname "$kak_text")"
