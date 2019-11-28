@@ -105,6 +105,3 @@ define-command i-kill %{
     }
 }
 
-define-command i-write-quit %{
-    i-write i-quit
-}
