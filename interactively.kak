@@ -63,17 +63,10 @@ define-command i-quit-keep %{
             i-quit-keep
         } catch %{
             yes-or-no 'Save changes? ' %{
-                try %{
-                    write
+                i-write %{
                     delete-buffer
                     i-quit-keep
-                } catch %{
-                    yes-or-no 'Ignore write protection? ' %{
-                        write!
-                        delete-buffer
-                        i-quit-keep
-                    } i-quit
-                }
+                } i-quit
             } %{
                delete-buffer!
                i-quit-keep
