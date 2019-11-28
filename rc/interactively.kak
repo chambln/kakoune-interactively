@@ -107,7 +107,7 @@ define-command i-kill %{
 
 
 define-command i-change-directory %{
-    prompt -file-completion 'cd: ' %{
+    prompt -file-completion 'change-directory ' %{
         evaluate-commands %sh{
             if [ -d "$kak_text" ]; then
                 printf "change-directory '%s'" "$kak_text"
