@@ -105,3 +105,20 @@ define-command i-kill %{
     }
 }
 
+
+define-command i-change-directory %{
+    prompt -file-completion 'cd: ' %{
+        evaluate-commands %sh{
+            if [ -d "$kak_text" ]; then
+                printf "change-directory '%s'" "$kak_text"
+            elif [ -e "$kak_text" ]; then
+                printf "change-directory '%s'" "$(dirname "$kak_text")"
+            else
+                printf '%s\n' "yes-or-no 'Create directory? ($kak_text) ' %{
+                                   echo %sh{ mkdir -pv '$kak_text' }
+                                   change-directory '$kak_text'
+                               } nop"
+            fi
+        }
+    }
+ }
