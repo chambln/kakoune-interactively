@@ -51,15 +51,7 @@ i-write %{
 define-command i-delete-buffer %{
     try delete-buffer catch %{
         yes-or-no 'Save changes? ' %{
-            try %{
-                write
-                delete-buffer
-            } catch %{
-                yes-or-no 'Ignore write protection? ' %{
-                    write!
-                    delete-buffer
-                } i-delete-buffer
-            }
+            i-write delete-buffer nop nop
         } delete-buffer!
     }
 }
