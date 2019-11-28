@@ -81,7 +81,7 @@ i-delete-buffer %{
     }
 }
 
-define-command i-quit-keep %{
+define-command -hidden i-quit-keep %{
     try quit catch %{
         i-delete-buffer i-quit-keep i-quit nop
     }
@@ -93,7 +93,7 @@ define-command i-quit %{
     }
 }
 
-define-command i-kill-keep %{
+define-command -hidden i-kill-keep %{
     try kill catch %{
         i-delete-buffer i-kill-keep i-kill nop
     }
