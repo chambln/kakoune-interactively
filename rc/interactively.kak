@@ -49,7 +49,7 @@ i-write %{
 }
 
 define-command \
--params 3 \
+-params ..3 \
 -docstring "i-delete-buffer [<commands1> [<commands2> [<commands3>]]]
 
 Interactively delete the buffer. Evaluate commands1 if successful else
