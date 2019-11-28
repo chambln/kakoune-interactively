@@ -13,6 +13,28 @@ define-command -params 3 yes-or-no %{
     }
 }
 
+define-command i-write %{
+    try write catch %{
+        yes-or-no 'Ignore write protection? ' write! nop
+    }
+}
+
+define-command i-delete-buffer %{
+    try delete-buffer catch %{
+        yes-or-no 'Save changes? ' %{
+            try %{
+                write
+                delete-buffer
+            } catch %{
+                yes-or-no 'Ignore write protection? ' %{
+                    write!
+                    delete-buffer
+                } i-delete-buffer
+            }
+        } delete-buffer!
+    }
+}
+
 define-command i-quit-keep %{
     try quit catch %{
         try %{
