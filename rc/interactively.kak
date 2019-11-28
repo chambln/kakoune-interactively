@@ -104,3 +104,7 @@ define-command i-kill %{
         yes-or-no 'Discard all changes? ' kill! i-kill-keep
     }
 }
+
+define-command i-write-quit %{
+    i-write i-quit
+}
