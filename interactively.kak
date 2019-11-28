@@ -13,9 +13,25 @@ define-command -params 3 yes-or-no %{
     }
 }
 
+define-command mkdir %{
+    echo %sh{
+        mkdir -pv "$(dirname "$kak_buffile")"
+    }
+}
+
 define-command i-write %{
     try write catch %{
-        yes-or-no 'Ignore write protection? ' write! nop
+        evaluate-commands %sh{
+            dir="$(dirname "$kak_buffile")"
+            if [ ! -d "$dir" ]; then
+                printf '%s\n' "yes-or-no 'Create directory? ($dir) ' %{
+                                   mkdir
+                                   i-write
+                               } nop"
+            else
+                printf '%s\n' "yes-or-no 'Ignore write protection? ' write! nop"
+            fi
+        }
     }
 }
 
