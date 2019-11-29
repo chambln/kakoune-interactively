@@ -34,8 +34,7 @@ i-write %{
         evaluate-commands %sh{
             dir="$(dirname "$kak_buffile")"
             if [ ! -d "$dir" ]; then
-                printf '%s\n' "yes-or-no 'Create directory? ($dir) ' %{
-                                   mkdir
+                printf '%s\n' "i-mkdir '$dir' %{
                                    i-write %{$1} %{$2} %{$3}
                                } %{$2} %{$3}"
             else
