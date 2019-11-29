@@ -4,6 +4,11 @@ define-command \
 -hidden \
 -command-completion \
 -params 3..4 \
+-docstring "
+    yes-or-no <prompt> <consequent> <alternative> [<final>]
+
+    Evaluate <consequent> if ‘y’ pressed, <alternative> if ‘n’
+    pressed. Finally evaluate <final>." \
 yes-or-no-instant %{
     prompt %arg{1} nop -on-change %{
         evaluate-commands %sh{
@@ -44,8 +49,8 @@ define-command \
 -docstring "
     yes-or-no <prompt> <consequent> <alternative> [<final>]
 
-    Evaluate <consequent> if [y]es, <alternative> if [n]o. Finally evaluate
-    <final>." \
+    Evaluate <consequent> if [y]es, <alternative> if [n]o. Finally
+    evaluate <final>." \
 yes-or-no %{
     evaluate-commands %sh{
             case "$kak_opt_yes_or_no_instant" in
@@ -122,7 +127,12 @@ define-command -hidden i-quit-keep %{
     }
 }
 
-define-command i-quit %{
+define-command \
+-docstring "
+    i-quit
+
+    Interactively quit." \
+i-quit %{
     try quit catch %{
         yes-or-no 'Discard all changes? ' quit! i-quit-keep
     }
@@ -134,7 +144,12 @@ define-command -hidden i-kill-keep %{
     }
 }
 
-define-command i-kill %{
+define-command \
+-docstring "
+    i-quit
+
+    Interactively quit." \
+i-kill %{
     try kill catch %{
         yes-or-no 'Discard all changes? ' kill! i-kill-keep
     }
