@@ -106,19 +106,25 @@ define-command i-kill %{
 }
 
 
-define-command -params .. i-change-directory %{
-    prompt -file-completion 'change-directory ' %arg{@} %{
+define-command \
+-params 1..4 \
+-file-completion \
+-docstring "i-change-directory <target> [<consequent> [<alternative> [<final>]]]
+
+Interactively change the working directory to <target> or the
+directory containing <target>. Evaluate <consequent> if successful else
+<alternative>. Finally evaluate <final>." \
+i-change-directory %{
+    try %{
+        change-directory %arg{1}
+    } catch %{
         evaluate-commands %sh{
-            if [ -z "$kak_text" ]; then
-                printf "change-directory"
-            elif [ -d "$kak_text" ]; then
-                printf "change-directory '%s'" "$kak_text"
-            elif [ -e "$kak_text" ]; then
-                printf "change-directory '%s'" "$(dirname "$kak_text")"
+            if [ -e "$1" ]; then
+                printf "change-directory '%s'" "$(dirname "$1")"
             else
-                printf '%s\n' "yes-or-no 'Create directory? ($kak_text) ' %{
-                                   echo %sh{ mkdir -pv '$kak_text' }
-                                   change-directory '$kak_text'
+                printf '%s\n' "yes-or-no 'Create directory? ($1) ' %{
+                                   echo %sh{ mkdir -pv '$1' | sed '\$!d' }
+                                   i-change-directory %{$1} %{$2} %{$3} %{$4}
                                } nop"
             fi
         }
