@@ -69,8 +69,8 @@ define-command \
 -docstring "
     i-write [<consequent> [<alternative> [<final>]]]
 
-    Interactively write the buffer. Evaluate <consequent> if successful else
-    <alternative>. Finally evaluate <final>." \
+    Interactively write the buffer. Evaluate <consequent> if successful
+    else <alternative>. Finally evaluate <final>." \
 i-write %{
     try %{
         write
