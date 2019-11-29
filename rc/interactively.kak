@@ -1,4 +1,5 @@
 define-command \
+-command-completion \
 -params 3..4 \
 -docstring "yes-or-no <prompt> <consequent> <alternative> <final>
 
