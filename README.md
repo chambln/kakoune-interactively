@@ -3,6 +3,8 @@
 This plugin provides makes various [Kakoune](https://kakoune.org)
 commands more friendly and interactive.
 
+[![asciicast](https://asciinema.org/a/F5UXtFxv6PjCnZnU05EFSxIzJ.svg)](https://asciinema.org/a/F5UXtFxv6PjCnZnU05EFSxIzJ)
+
 For example, `i-write` writes the buffer; if the file is write protected, it
 shows a yes-or-no prompt, ‘Ignore write protection?’; if its parent directory
 doesn’t exist, ‘Create directory? (/path/to/its/directory)’. Extending this,
