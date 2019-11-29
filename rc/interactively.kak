@@ -1,7 +1,7 @@
 define-command \
 -command-completion \
 -params 3..4 \
--docstring "yes-or-no <prompt> <consequent> <alternative> <final>
+-docstring "yes-or-no <prompt> <consequent> <alternative> [<final>]
 
 Evaluate <consequent> if [y]es, <alternative> if [n]o. Finally evaluate
 <final>." \
