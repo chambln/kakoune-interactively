@@ -41,10 +41,11 @@ yes-or-no-patient %{
 define-command \
 -command-completion \
 -params 3..4 \
--docstring "yes-or-no <prompt> <consequent> <alternative> [<final>]
+-docstring "
+    yes-or-no <prompt> <consequent> <alternative> [<final>]
 
-Evaluate <consequent> if [y]es, <alternative> if [n]o. Finally evaluate
-<final>." \
+    Evaluate <consequent> if [y]es, <alternative> if [n]o. Finally evaluate
+    <final>." \
 yes-or-no %{
     evaluate-commands %sh{
             case "$kak_opt_yes_or_no_instant" in
@@ -60,10 +61,11 @@ yes-or-no %{
 
 define-command \
 -params ..3 \
--docstring "i-write [<consequent> [<alternative> [<final>]]]
+-docstring "
+    i-write [<consequent> [<alternative> [<final>]]]
 
-Interactively write the buffer. Evaluate <consequent> if successful else
-<alternative>. Finally evaluate <final>." \
+    Interactively write the buffer. Evaluate <consequent> if successful else
+    <alternative>. Finally evaluate <final>." \
 i-write %{
     try %{
         write
@@ -88,10 +90,11 @@ i-write %{
 
 define-command \
 -params ..3 \
--docstring "i-delete-buffer [<consequent> [<alternative> [<final>]]]
+-docstring "
+    i-delete-buffer [<consequent> [<alternative> [<final>]]]
 
-Interactively delete the buffer. Evaluate <consequent> if successful
-else <alternative>. Finally evaluate <final>." \
+    Interactively delete the buffer. Evaluate <consequent> if successful
+    else <alternative>. Finally evaluate <final>." \
 i-delete-buffer %{
     try %{
         delete-buffer
@@ -140,10 +143,11 @@ define-command i-kill %{
 define-command \
 -file-completion \
 -params 1..4 \
--docstring "i-mkdir <directory> [<consequent> [<alternative> [<final>]]]
+-docstring "
+    i-mkdir <directory> [<consequent> [<alternative> [<final>]]]
 
-Interactively create <directory>. Evaluate <consequent> if successful
-else <alternative>. Finally evaluate <final>." \
+    Interactively create <directory>. Evaluate <consequent> if successful
+    else <alternative>. Finally evaluate <final>." \
 i-mkdir %{
     evaluate-commands %sh{
         printf '%s\n' "yes-or-no 'Create directory? ($1) ' %{
@@ -156,11 +160,12 @@ i-mkdir %{
 define-command \
 -params 1..4 \
 -file-completion \
--docstring "i-change-directory <target> [<consequent> [<alternative> [<final>]]]
+-docstring "
+    i-change-directory <target> [<consequent> [<alternative> [<final>]]]
 
-Interactively change the working directory to <target> or the
-directory containing <target>. Evaluate <consequent> if successful else
-<alternative>. Finally evaluate <final>." \
+    Interactively change the working directory to <target> or the
+    directory containing <target>. Evaluate <consequent> if successful else
+    <alternative>. Finally evaluate <final>." \
 i-change-directory %{
     try %{
         change-directory %arg{1}
