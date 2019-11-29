@@ -179,8 +179,8 @@ define-command \
     i-change-directory <target> [<consequent> [<alternative> [<final>]]]
 
     Interactively change the working directory to <target> or the
-    directory containing <target>. Evaluate <consequent> if successful else
-    <alternative>. Finally evaluate <final>." \
+    directory containing <target>. Evaluate <consequent> if successful
+    else <alternative>. Finally evaluate <final>." \
 i-change-directory %{
     try %{
         change-directory %arg{1}
