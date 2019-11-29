@@ -1,6 +1,7 @@
 declare-option bool yes_or_no_instant false
 
 define-command \
+-hidden \
 -command-completion \
 -params 3..4 \
 yes-or-no-instant %{
@@ -19,6 +20,7 @@ yes-or-no-instant %{
 }
 
 define-command \
+-hidden \
 -command-completion \
 -params 3..4 \
 yes-or-no-patient %{
