@@ -138,6 +138,7 @@ define-command i-kill %{
 }
 
 define-command \
+-file-completion \
 -params 1..4 \
 -docstring "i-mkdir <directory> [<consequent> [<alternative> [<final>]]]
 
