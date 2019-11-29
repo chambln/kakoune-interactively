@@ -1,11 +1,27 @@
+declare-option bool yes_or_no_instant false
+
 define-command \
 -command-completion \
 -params 3..4 \
--docstring "yes-or-no <prompt> <consequent> <alternative> [<final>]
+yes-or-no-instant %{
+    prompt %arg{1} nop -on-change %{
+        evaluate-commands %sh{
+            case "$kak_text" in
+            y)
+                printf '%s\n' 'exec <ret>' "$2" "$4"
+                ;;
+            n)
+                printf '%s\n' 'exec <ret>' "$3" "$4"
+                ;;
+            esac
+        }
+    }
+}
 
-Evaluate <consequent> if [y]es, <alternative> if [n]o. Finally evaluate
-<final>." \
-yes-or-no %{
+define-command \
+-command-completion \
+-params 3..4 \
+yes-or-no-patient %{
     prompt -shell-script-completion 'printf "%s\n" yes no y n' %arg{1} %{
         evaluate-commands %sh{
             case "$kak_text" in
@@ -17,6 +33,26 @@ yes-or-no %{
                 ;;
             esac
         }
+    }
+}
+
+define-command \
+-command-completion \
+-params 3..4 \
+-docstring "yes-or-no <prompt> <consequent> <alternative> [<final>]
+
+Evaluate <consequent> if [y]es, <alternative> if [n]o. Finally evaluate
+<final>." \
+yes-or-no %{
+    evaluate-commands %sh{
+            case "$kak_opt_yes_or_no_instant" in
+            true)
+                printf '%s\n' 'yes-or-no-instant %arg{@}'
+                ;;
+            false)
+                printf '%s\n' 'yes-or-no-patient %arg{@}'
+                ;;
+            esac
     }
 }
 
