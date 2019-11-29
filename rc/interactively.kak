@@ -27,10 +27,10 @@ define-command mkdir %{
 
 define-command \
 -params ..3 \
--docstring "i-write [<commands1> [<commands2> [<commands3>]]]
+-docstring "i-write [<consequent> [<alternative> [<final>]]]
 
-Interactively write the buffer. Evaluate commands1 if successful else
-commands2. Finally evaluate commands3." \
+Interactively write the buffer. Evaluate <consequent> if successful else
+<alternative>. Finally evaluate <final>." \
 i-write %{
     try %{
         write
@@ -56,10 +56,10 @@ i-write %{
 
 define-command \
 -params ..3 \
--docstring "i-delete-buffer [<commands1> [<commands2> [<commands3>]]]
+-docstring "i-delete-buffer [<consequent> [<alternative> [<final>]]]
 
-Interactively delete the buffer. Evaluate commands1 if successful else
-commands2. Finally evaluate commands3." \
+Interactively delete the buffer. Evaluate <consequent> if successful
+else <alternative>. Finally evaluate <final>." \
 i-delete-buffer %{
     try %{
         delete-buffer
