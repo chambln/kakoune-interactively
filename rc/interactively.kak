@@ -19,12 +19,6 @@ yes-or-no %{
     }
 }
 
-define-command mkdir %{
-    echo %sh{
-        mkdir -pv "$(dirname "$kak_buffile")"
-    }
-}
-
 define-command \
 -params ..3 \
 -docstring "i-write [<consequent> [<alternative> [<final>]]]
@@ -105,6 +99,20 @@ define-command i-kill %{
     }
 }
 
+define-command \
+-params 1..4 \
+-docstring "i-mkdir <directory> [<consequent> [<alternative> [<final>]]]
+
+Interactively create <directory>. Evaluate <consequent> if successful
+else <alternative>. Finally evaluate <final>." \
+i-mkdir %{
+    evaluate-commands %sh{
+        printf '%s\n' "yes-or-no 'Create directory? ($1) ' %{
+                           echo %sh{ mkdir -pv '$1' | sed '\$!d' }
+                           $2
+                       } %{$3} %{$4}"
+    }
+}
 
 define-command \
 -params 1..4 \
@@ -122,10 +130,9 @@ i-change-directory %{
             if [ -e "$1" ]; then
                 printf "change-directory '%s'" "$(dirname "$1")"
             else
-                printf '%s\n' "yes-or-no 'Create directory? ($1) ' %{
-                                   echo %sh{ mkdir -pv '$1' | sed '\$!d' }
+                printf '%s\n' "i-mkdir '$1' %{
                                    i-change-directory %{$1} %{$2} %{$3} %{$4}
-                               } nop"
+                               } nop nop"
             fi
         }
     }
