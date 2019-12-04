@@ -4,11 +4,6 @@ define-command \
 -hidden \
 -command-completion \
 -params 3..4 \
--docstring "
-    yes-or-no <prompt> <consequent> <alternative> [<final>]
-
-    Evaluate <consequent> if ‘y’ pressed, <alternative> if ‘n’
-    pressed. Finally evaluate <final>." \
 yes-or-no-instant %{
     prompt %arg{1} nop -on-change %{
         evaluate-commands %sh{
@@ -49,8 +44,9 @@ define-command \
 -docstring "
     yes-or-no <prompt> <consequent> <alternative> [<final>]
 
-    Evaluate <consequent> if [y]es, <alternative> if [n]o. Finally
-    evaluate <final>." \
+    Evaluate <consequent> if ‘y’ pressed, <alternative> if ‘n’
+    pressed. Finally evaluate <final>. If the prompt is dismissed with
+    <esc>, evaluate nothing." \
 yes-or-no %{
     evaluate-commands %sh{
             case "$kak_opt_yes_or_no_instant" in
