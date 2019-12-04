@@ -28,7 +28,7 @@ You can use `yes-or-no` to create your own interactions. Prompts happen
 asynchronously, so Kakoune won’t wait for the prompt to be dismissed
 before continuing with the next line of the script. To work around this,
 `yes-or-no` accepts an optional parameter `<final>` which it evaluates
-after an yes or no answer is given. If the prompt is dismissed with
+after a yes or no answer is given. If the prompt is dismissed with
 <kbd>Esc</kbd>, nothing is evaluated.
 
 ## Bugs
