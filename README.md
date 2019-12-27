@@ -13,10 +13,10 @@ Suggested configuration:
 ``` kak
 # ~/.config/kak/kakrc
 plug chambln/kakoune-interactively config %{
+    alias global cd i-change-directory
     alias global db i-delete-buffer
     alias global q i-quit
     alias global w i-write
-    alias global cd i-change-directory
     set-option global yes_or_no_instant true
 }
 ```
@@ -31,8 +31,6 @@ before continuing with the next line of the script. To work around this,
 after a yes or no answer is given. If the prompt is dismissed with
 <kbd>Esc</kbd>, nothing is evaluated.
 
-## Bugs
+## Bugs and notes
 
-  - `i-delete-buffer` is too keen on writing scratch buffers before
-    deleting them
-  - `i-write` is too quick to conclude that the file is write protected
+  - You can’t pass a filename to `i-write`
