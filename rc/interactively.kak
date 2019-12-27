@@ -74,7 +74,8 @@ i-write %{
         evaluate-commands "%arg{3}"
     } catch %{
         evaluate-commands %sh{
-            case "$kak_buffile" in /*)
+            case "$kak_buffile" in
+            /*)
                 dir="$(dirname "$kak_buffile")"
                 if [ ! -d "$dir" ]; then
                     printf '%s\n' "i-mkdir '$dir' %{
@@ -86,6 +87,9 @@ i-write %{
                                        $1
                                    } %{$2} %{$3}"
                 fi
+                ;;
+            *)
+                printf '%s\n' "execute-keys ': write '"
                 ;;
             esac
         }
