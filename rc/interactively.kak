@@ -5,13 +5,15 @@ define-command \
 -command-completion \
 -params 3..4 \
 yes-or-no-instant %{
-    prompt %arg{1} nop -on-change %{
+    prompt "%arg{1} ([a]bort, [y]es, [n]o) " \
+    -shell-script-completion 'printf "%s\n" abort yes no a y n' \
+    %{
         evaluate-commands %sh{
             case "$kak_text" in
-            y)
+            y|yes)
                 printf '%s\n' 'exec <ret>' "$2" "$4"
                 ;;
-            n)
+            n|no)
                 printf '%s\n' 'exec <ret>' "$3" "$4"
                 ;;
             esac
@@ -24,7 +26,9 @@ define-command \
 -command-completion \
 -params 3..4 \
 yes-or-no-patient %{
-    prompt -shell-script-completion 'printf "%s\n" yes no y n' %arg{1} %{
+    prompt "%arg{1} ([a]bort, [y]es, [n]o) " \
+    -shell-script-completion 'printf "%s\n" abort yes no a y n' \
+    %{
         evaluate-commands %sh{
             case "$kak_text" in
             y|yes)
@@ -82,7 +86,7 @@ i-write %{
                                        i-write %{$1} %{$2} %{$3}
                                    } %{$2} %{$3}"
                 else
-                    printf '%s\n' "yes-or-no 'Ignore write protection? ' %{
+                    printf '%s\n' "yes-or-no 'Ignore write protection?' %{
                                        write!
                                        $1
                                    } %{$2} %{$3}"
@@ -110,7 +114,7 @@ i-delete-buffer %{
         evaluate-commands "%arg{3}"
     } catch %{
         evaluate-commands %sh{
-            printf '%s\n' "yes-or-no 'Save changes? ' %{
+            printf '%s\n' "yes-or-no 'Save changes?' %{
                                i-write %{
                                    delete-buffer
                                    $1
@@ -137,7 +141,7 @@ define-command \
     Interactively quit." \
 i-quit %{
     try quit catch %{
-        yes-or-no 'Discard all changes? ' quit! i-quit-keep
+        yes-or-no 'Discard all changes?' quit! i-quit-keep
     }
 }
 
@@ -154,7 +158,7 @@ define-command \
     Interactively quit." \
 i-kill %{
     try kill catch %{
-        yes-or-no 'Discard all changes? ' kill! i-kill-keep
+        yes-or-no 'Discard all changes?' kill! i-kill-keep
     }
 }
 
@@ -168,7 +172,7 @@ define-command \
     else <alternative>. Finally evaluate <final>." \
 i-mkdir %{
     evaluate-commands %sh{
-        printf '%s\n' "yes-or-no 'Create directory? ($1) ' %{
+        printf '%s\n' "yes-or-no 'Create directory? ($1)' %{
                            echo %sh{ mkdir -pv '$1' | sed '\$!d' }
                            $2
                        } %{$3} %{$4}"
