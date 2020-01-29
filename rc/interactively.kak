@@ -46,11 +46,10 @@ define-command \
 -command-completion \
 -params 3..4 \
 -docstring "
-    yes-or-no <prompt> <consequent> <alternative> [<final>]
-
-    Evaluate <consequent> if ‘y’ pressed, <alternative> if ‘n’
-    pressed. Finally evaluate <final>. If the prompt is dismissed with
-    <esc>, evaluate nothing." \
+    yes-or-no <prompt> <consequent> <alternative> [<final>]:
+    evaluate <consequent> if ‘y’ pressed, <alternative> if ‘n’
+    pressed; finally evaluate <final>; if the prompt is dismissed with
+    <esc>, evaluate nothing" \
 yes-or-no %{
     evaluate-commands %sh{
             case "$kak_opt_yes_or_no_instant" in
@@ -67,10 +66,9 @@ yes-or-no %{
 define-command \
 -params ..3 \
 -docstring "
-    i-write [<consequent> [<alternative> [<final>]]]
-
-    Interactively write the buffer. Evaluate <consequent> if successful
-    else <alternative>. Finally evaluate <final>." \
+    i-write [<consequent> [<alternative> [<final>]]]: interactively
+    write the buffer; evaluate <consequent> if successful else
+    <alternative>; finally evaluate <final>" \
 i-write %{
     try %{
         write
@@ -103,10 +101,9 @@ i-write %{
 define-command \
 -params ..3 \
 -docstring "
-    i-delete-buffer [<consequent> [<alternative> [<final>]]]
-
-    Interactively delete the buffer. Evaluate <consequent> if successful
-    else <alternative>. Finally evaluate <final>." \
+    i-delete-buffer [<consequent> [<alternative> [<final>]]]:
+    interactively delete the buffer; evaluate <consequent> if successful
+    else <alternative>; finally evaluate <final>" \
 i-delete-buffer %{
     try %{
         delete-buffer
@@ -136,9 +133,7 @@ define-command -hidden i-quit-keep %{
 
 define-command \
 -docstring "
-    i-quit
-
-    Interactively quit." \
+    i-quit: interactively quit" \
 i-quit %{
     try quit catch %{
         yes-or-no 'Discard all changes?' quit! i-quit-keep
@@ -153,9 +148,7 @@ define-command -hidden i-kill-keep %{
 
 define-command \
 -docstring "
-    i-quit
-
-    Interactively quit." \
+    i-quit: interactively quit" \
 i-kill %{
     try kill catch %{
         yes-or-no 'Discard all changes?' kill! i-kill-keep
@@ -166,10 +159,9 @@ define-command \
 -file-completion \
 -params 1..4 \
 -docstring "
-    i-mkdir <directory> [<consequent> [<alternative> [<final>]]]
-
-    Interactively create <directory>. Evaluate <consequent> if successful
-    else <alternative>. Finally evaluate <final>." \
+    i-mkdir <directory> [<consequent> [<alternative> [<final>]]]:
+    interactively create <directory>; evaluate <consequent> if successful
+    else <alternative>; finally evaluate <final>" \
 i-mkdir %{
     evaluate-commands %sh{
         printf '%s\n' "yes-or-no 'Create directory? ($1)' %{
@@ -183,11 +175,10 @@ define-command \
 -params 1..4 \
 -file-completion \
 -docstring "
-    i-change-directory <target> [<consequent> [<alternative> [<final>]]]
-
-    Interactively change the working directory to <target> or the
-    directory containing <target>. Evaluate <consequent> if successful
-    else <alternative>. Finally evaluate <final>." \
+    i-change-directory <target> [<consequent> [<alternative> [<final>]]]:
+    interactively change the working directory to <target> or the
+    directory containing <target>; evaluate <consequent> if successful
+    else <alternative>; finally evaluate <final>" \
 i-change-directory %{
     try %{
         change-directory %arg{1}
